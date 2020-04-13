@@ -9,8 +9,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    private let studentsNames = ["Dhanraj", "Prathmesh", "Rohit", "Kshitij", "Abhishek", "Mandar", "Shailesh", "Gitesh"]
+    
+    @State private var searchText : String = ""
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            List {
+                
+                SearchBar(text: $searchText)
+                
+                ForEach(studentsNames.filter({ self.searchText.isEmpty ? true : $0.lowercased().contains(searchText.lowercased())}), id: \.self) { student in
+                    Text(student)
+                }
+            }
+            .navigationBarTitle("Students List")
+        }
     }
 }
 
